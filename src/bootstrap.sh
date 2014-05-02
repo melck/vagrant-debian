@@ -11,8 +11,8 @@ chmod 600 /home/vagrant/.ssh/authorized_keys
 chown -R vagrant:vagrant /home/vagrant/.ssh
 
 # Install ohai gem until CHEF-3778 is fixed
-gem install ohai
-gem install chef
+#gem install ohai
+#gem install chef
 
 # Install guest additions on next boot
 cp /etc/rc.{local,local.bak} && cp /root/poststrap.sh /etc/rc.local

@@ -16,7 +16,7 @@ case ${argv[0]} in
     ;;
 esac
 
-VERSION="7.4.0"
+VERSION="7.5.0"
 BOX="debian-${VERSION}-${ARCH}"
 
 FOLDER_BASE=$(pwd)
@@ -51,7 +51,7 @@ function wait_for_shutdown {
 }
 
 # Make sure guest additions are available.
-VBOX_GUESTADDITIONS=$(find / -name VBoxGuestAdditions.iso 2>/dev/null)
+VBOX_GUESTADDITIONS="/usr/share/virtualbox/VBoxGuestAdditions.iso"
 if [ "$VBOX_GUESTADDITIONS" == "" ]; then
     abort "VirtualBox Guest Additions not found. Aborting."
 fi
@@ -140,7 +140,7 @@ $MKISOFS -r -V "Custom Debian Install CD" -cache-inodes -quiet -J -l \
     "${FOLDER_BUILD}/custom"
 
 info "Creating VM..."
-VBoxManage createvm --name "${BOX}" --ostype Debian --register --basefolder "${FOLDER_VBOX}"
+VBoxManage createvm --name "${BOX}" --ostype Debian_64 --register --basefolder "${FOLDER_VBOX}"
 
 VBoxManage modifyvm "${BOX}" --memory 360 --boot1 dvd --boot2 disk \
     --boot3 none --boot4 none --vram 12 --pae off --rtcuseutc on
@@ -149,7 +149,7 @@ VBoxManage storagectl "${BOX}" --name "IDE Controller" --add ide \
     --controller PIIX4 --hostiocache on
 
 VBoxManage storagectl "${BOX}" --name "SATA Controller" --add sata \
-    --controller IntelAhci --sataportcount 1 --hostiocache off
+    --controller IntelAhci --portcount 1 --hostiocache off
 
 VBoxManage createhd --filename "${FOLDER_VBOX}/${BOX}/${BOX}.vdi" --size 40960
 
