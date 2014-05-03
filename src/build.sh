@@ -171,4 +171,10 @@ VBoxManage startvm "${BOX}"
 wait_for_shutdown
 
 info "Building Vagrant box..."
-vagrant package --base "${BOX}" --output "${BOX}.box"
+cd ${FOLDER_BUILD} && vagrant package --base "${BOX}" --output "${BOX}.box"
+
+info "Clean up virtualbox vm"
+VBoxManage unregistervm "${BOX}" --delete > /dev/null
+
+info "Clean up build"
+rm -rf
