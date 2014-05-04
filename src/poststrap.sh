@@ -4,14 +4,19 @@
 apt-get install -y linux-headers-$(uname -r)
 mount /dev/cdrom /media/cdrom
 sh /media/cdrom/VBoxLinuxAdditions.run
+mv /etc/rc.local.bak /etc/rc.local
 
 # Fix mount issues for virtualbox guest additions v4.3.10
-VBOX_VERSION=`lsmod | grep -io vboxguest | xargs modinfo | grep -iw version | sed -n 's#^.*\?\([0-9]\+.[0-9]\+.[0-9]\+\)$#\1#p'`
-if [[ "${VBOX_VERSION}" -eq "4.3.10" ]]; then
+if [[ -d "/opt/VBoxGuestAdditions-4.3.10" ]]; then
 	ln -s /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions
 fi
 
-mv /etc/rc.local.bak /etc/rc.local
+# Install last puppet
+wget --quiet --tries=5 --timeout=10 -O /tmp/puppet.deb "http://apt.puppetlabs.com/puppetlabs-release-wheezy.deb"
+dpkg -i /tmp/puppet.deb
+apt-get update
+apt-get -y install puppet
+rm -rf /tmp/puppet.deb
 
 # display grub timeout and login promt after boot
 sed -i \
