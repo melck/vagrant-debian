@@ -16,7 +16,7 @@ case ${argv[0]} in
     ;;
 esac
 
-VERSION="7.5.0"
+VERSION="6.0.9"
 BOX="debian-${VERSION}-${ARCH}"
 
 FOLDER_BASE=$(pwd)
@@ -25,7 +25,7 @@ FOLDER_BUILD="${FOLDER_BASE}/build"
 FOLDER_VBOX="${FOLDER_BUILD}/vbox"
 
 DEBIAN_MIRROR="cdimage.debian.org"
-DEBIAN_URL="http://${DEBIAN_MIRROR}/debian-cd/${VERSION}/${ARCH}/iso-cd"
+DEBIAN_URL="http://${DEBIAN_MIRROR}/cdimage/archive/${VERSION}/${ARCH}/iso-cd"
 DEBIAN_ISO_NAME="debian-${VERSION}-${ARCH}-netinst.iso"
 DEBIAN_ISO_URL="${DEBIAN_URL}/${DEBIAN_ISO_NAME}"
 DEBIAN_ISO_FILE="${FOLDER_ISO}/${DEBIAN_ISO_NAME}"
@@ -58,12 +58,7 @@ fi
 
 # Check if VM name is occupied
 if VBoxManage showvminfo "${BOX}" >/dev/null 2>/dev/null; then
-    read -p "Are you sure you want to destroy the '${BOX}' VM? [y/n] "
-    if [ "$REPLY" == "y" ]; then
-        VBoxManage unregistervm "${BOX}" --delete > /dev/null
-    else
-        abort "VM ${BOX} already exist. Aborting."
-    fi
+    VBoxManage unregistervm "${BOX}" --delete > /dev/null
 fi
 
 mkdir -p "${FOLDER_ISO}"

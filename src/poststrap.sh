@@ -12,11 +12,11 @@ if [[ -d "/opt/VBoxGuestAdditions-4.3.10" ]]; then
 fi
 
 # Install last puppet
-wget --quiet --tries=5 --timeout=10 -O /tmp/puppet.deb "http://apt.puppetlabs.com/puppetlabs-release-wheezy.deb"
-dpkg -i /tmp/puppet.deb
-apt-get update
-apt-get -y install puppet
-rm -rf /tmp/puppet.deb
+#wget --quiet --tries=5 --timeout=10 -O /tmp/puppet.deb "http://apt.puppetlabs.com/puppetlabs-release-squeeze.deb"
+#dpkg -i /tmp/puppet.deb
+#apt-get update
+#apt-get -y install puppet
+#rm -rf /tmp/puppet.deb
 
 # display grub timeout and login promt after boot
 sed -i \
@@ -37,24 +37,29 @@ apt-get clean -y
 apt-get autoclean -y
 
 # Zero free space to aid VM compression
+echo "Cleanup"
 dd if=/dev/zero of=/EMPTY bs=1M
 rm -f /EMPTY
 
 # Remove bash history
+echo "Cleanup history"
 unset HISTFILE
 rm -f /root/.bash_history
 rm -f /home/vagrant/.bash_history
 
 # Cleanup log files
+echo "Cleanup logs"
 find /var/log -type f | while read f; do echo -ne '' > $f; done;
 
 # Whiteout root
+echo "Cleanup root"
 count=`df --sync -kP / | tail -n1  | awk -F ' ' '{print $4}'`;
 let count--
 dd if=/dev/zero of=/tmp/whitespace bs=1024 count=$count;
 rm /tmp/whitespace;
 
 # Whiteout /boot
+echo "Cleanup boot"
 count=`df --sync -kP /boot | tail -n1 | awk -F ' ' '{print $4}'`;
 let count--
 dd if=/dev/zero of=/boot/whitespace bs=1024 count=$count;

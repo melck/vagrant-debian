@@ -28,3 +28,7 @@ softclean: fixowner
 clean: fixowner
 	rm -rf build
 	rm -rf *.box
+
+hclean: fixowner
+	rm -rf build
+	rm -rf *.box
