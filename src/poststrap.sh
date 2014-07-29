@@ -11,13 +11,6 @@ if [[ -d "/opt/VBoxGuestAdditions-4.3.10" ]]; then
 	ln -s /opt/VBoxGuestAdditions-4.3.10/lib/VBoxGuestAdditions /usr/lib/VBoxGuestAdditions
 fi
 
-# Install last puppet
-wget --quiet --tries=5 --timeout=10 -O /tmp/puppet.deb "http://apt.puppetlabs.com/puppetlabs-release-wheezy.deb"
-dpkg -i /tmp/puppet.deb
-apt-get update
-apt-get -y install puppet
-rm -rf /tmp/puppet.deb
-
 # display grub timeout and login promt after boot
 sed -i \
   -e "s/quiet splash//" \

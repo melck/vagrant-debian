@@ -151,7 +151,7 @@ VBoxManage storagectl "${BOX}" --name "IDE Controller" --add ide \
 VBoxManage storagectl "${BOX}" --name "SATA Controller" --add sata \
     --controller IntelAhci --portcount 1 --hostiocache off
 
-VBoxManage createhd --filename "${FOLDER_VBOX}/${BOX}/${BOX}.vdi" --size 40960
+VBoxManage createhd --filename "${FOLDER_VBOX}/${BOX}/${BOX}.vdi" --size 20960
 
 VBoxManage storageattach "${BOX}" --storagectl "SATA Controller" --port 0 \
     --device 0 --type hdd --medium "${FOLDER_VBOX}/${BOX}/${BOX}.vdi"

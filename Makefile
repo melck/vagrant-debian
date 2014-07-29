@@ -18,13 +18,9 @@ build-32: fixowner
 	bash src/build.sh 32
 
 build-64: fixowner
-	bash src/build.sh 64
+	@bash src/build.sh 64
 
 softclean: fixowner
-	rm -rf build/custom
-	rm -rf build/initrd
-	rm -rf *.box
-
-clean: fixowner
-	rm -rf build
-	rm -rf *.box
+	@rm -rf build/custom
+	@rm -rf build/initrd
+	@rm -rf build
