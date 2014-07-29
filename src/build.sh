@@ -16,7 +16,7 @@ case ${argv[0]} in
     ;;
 esac
 
-VERSION="7.5.0"
+VERSION="7.6.0"
 BOX="debian-${VERSION}-${ARCH}"
 
 FOLDER_BASE=$(pwd)
